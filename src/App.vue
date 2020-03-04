@@ -1,32 +1,55 @@
 <template>
   <div id="app">
+    <router-view></router-view>
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link active-class="mark" tag="li" to="/home">
+        <i class="iconfont icon-shouye"></i>
+        <span>首页</span>
+      </router-link>
+      <router-link active-class="mark" tag="li" to="/chat">
+        <i class="iconfont icon-ziyuan"></i>
+        <span>聊天室</span>
+      </router-link>
+      <router-link active-class="mark" tag="li" to="/my">
+        <i class="iconfont icon-wode"></i>
+        <span>我的</span>
+      </router-link>
     </div>
-    <router-view/>
   </div>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.mark {
+  color: rgb(249, 34, 70);
+}
+* {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+body,
+html {
+  height: 100%;
+}
+
+#app{
+  height: 100%;
 }
 
 #nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  background: #fff;
+  position: fixed;
+  display: flex;
+  bottom: 0px;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  color: rgb(51, 51, 51);
+  .iconfont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
 </style>

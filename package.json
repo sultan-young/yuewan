@@ -11,6 +11,7 @@
     "animate.css": "^3.7.2",
     "better-scroll": "^1.15.2",
     "core-js": "^3.6.4",
+    "eslint-loader": "^3.0.3",
     "swiper": "^5.3.6",
     "vant": "^2.5.3",
     "vue": "^2.6.11",
@@ -46,5 +47,13 @@
       "vue-cli-service lint",
       "git add"
     ]
-  }
+  },
+  "description": "```\r npm install\r ```",
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/qq1050462990/yuewan"
+  },
+  "author": "",
+  "license": "ISC"
 }

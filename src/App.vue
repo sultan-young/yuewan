@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <div id="nav">
+    <div id="nav" v-show="footNavShow">
       <router-link active-class="mark" tag="li" to="/home">
         <i class="iconfont icon-shouye"></i>
         <span>首页</span>
@@ -18,6 +18,15 @@
   </div>
 </template>
 
+<script>
+import {mapState} from 'vuex'
+export default {
+  computed: {
+    ...mapState(["footNavShow"])
+  }
+}
+</script>
+
 <style lang="scss">
 .mark {
   color: rgb(249, 34, 70);
@@ -30,10 +39,12 @@
 body,
 html {
   height: 100%;
+  overflow: hidden;
 }
 
 #app{
   height: 100%;
+  overflow: hidden;
 }
 
 #nav {

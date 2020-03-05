@@ -19,7 +19,13 @@ const routes = [
   },
   {
     path: '/my',
-    component: () => import('@/views/My.vue')
+    component: () => import('@/views/My.vue'),
+    children: [
+      {
+        path: '/my/myname',
+        component: () => import('@/views/Myy/Myname.vue')
+      }
+    ]
   },
   {
     path: '/:list',

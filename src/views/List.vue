@@ -39,45 +39,45 @@
   </div>
 </template>
 <script>
-import jsonp from "@/util/jsonp";
+import jsonp from '@/util/jsonp'
 export default {
-  data() {
+  data () {
     return {
       data: {},
       type: 0
-    };
+    }
   },
-  mounted() {
+  mounted () {
     jsonp(
-      "https://yapi.tuwan.com/Lists/getListApi", //这里填写url
-      { type: 0, callback: "_jsonp38cyo66fzc", dtid: this.$route.query.dtid }, //这里填写query字符串
+      'https://yapi.tuwan.com/Lists/getListApi', // 这里填写url
+      { type: 0, callback: '_jsonp38cyo66fzc', dtid: this.$route.query.dtid }, // 这里填写query字符串
       data => {
-        //这里填写回调函数
+        // 这里填写回调函数
         // this.dataList = data;
         // this.HandlerRouters(this.dataList.gamelist);
-        this.data = data;
-        console.log(data);
+        this.data = data
+        console.log(data)
       }
-    );
+    )
   },
   methods: {
-    changeType(value) {
-      this.type = value;
+    changeType (value) {
+      this.type = value
       jsonp(
-        "https://yapi.tuwan.com/Lists/getListApi", //这里填写url
+        'https://yapi.tuwan.com/Lists/getListApi', // 这里填写url
         {
           type: this.type,
-          callback: "_jsonp38cyo66fzc",
+          callback: '_jsonp38cyo66fzc',
           dtid: this.$route.query.dtid
         },
         data => {
-          this.data = data;
-          console.log(data);
+          this.data = data
+          console.log(data)
         }
-      );
+      )
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

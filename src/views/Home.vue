@@ -16,7 +16,7 @@
               <img :src="list.images" alt />
               <span>{{list.gamename}}</span>
             </router-link>
-          
+
           </div>
         </div>
         <!-- Add Pagination -->
@@ -67,54 +67,57 @@
 </template>
 
 <script>
-import jsonp from "@/util/jsonp";
-import Vue from "vue";
-import { Search } from "vant";
-import Swiper from "swiper";
-import "swiper/css/swiper.min.css";
+import jsonp from '@/util/jsonp'
+import Vue from 'vue'
+import { Search } from 'vant'
+import Swiper from 'swiper'
+import 'swiper/css/swiper.min.css'
+import {mapMutations} from 'vuex'
 
-Vue.use(Search);
+Vue.use(Search)
 export default {
-  data() {
+  data () {
     return {
-      value: "", //搜索框的值。
-      dataList: {}, //这个是取回的所有数据，是个大对象。
-      trendRouters: [] //这个是动态路由的数组，聊天室，线上LOL那些。
-    };
+      value: '', // 搜索框的值。
+      dataList: {}, // 这个是取回的所有数据，是个大对象。
+      trendRouters: [] // 这个是动态路由的数组，聊天室，线上LOL那些。
+    }
   },
-  mounted() {
+  mounted () {
+    this.setFootNavHiShow()
     jsonp(
-      "https://yapi.tuwan.com/Index/getPlayIndexApi/", //这里填写url
-      { callback: "_jsonp38cyo66fzc", type: "chat" }, //这里填写query字符串
+      'https://yapi.tuwan.com/Index/getPlayIndexApi/', // 这里填写url
+      { callback: '_jsonp38cyo66fzc', type: 'chat' }, // 这里填写query字符串
       data => {
-        //这里填写回调函数
-        this.dataList = data;
-        this.HandlerRouters(this.dataList.gamelist);
-        console.log(this.dataList);
+        // 这里填写回调函数
+        this.dataList = data
+        this.HandlerRouters(this.dataList.gamelist)
+        console.log(this.dataList)
       }
-    );
+    )
   },
-  updated() {
-    var swiper = new Swiper(".swiper-container", {
+  updated () {
+    var swiper = new Swiper('.swiper-container', {
       pagination: {
-        el: ".swiper-pagination"
+        el: '.swiper-pagination'
       }
-    });
+    })
   },
   methods: {
-    HandlerRouters(data) {
-      var flag = -1;
+    ...mapMutations(["setFootNavHiShow"]),
+    HandlerRouters (data) {
+      var flag = -1
       data.forEach((value, index) => {
         if (index % 5 === 0 || index === 0) {
-          this.trendRouters.push([]);
-          flag++;
+          this.trendRouters.push([])
+          flag++
         }
-        this.trendRouters[flag].push(value);
-      });
+        this.trendRouters[flag].push(value)
+      })
       // console.log(this.trendRouters);
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .swiper-slide {
@@ -236,4 +239,5 @@ ul{
 .footer{
   height: 115px;
 }
+</style>
 </style>

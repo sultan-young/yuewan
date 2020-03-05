@@ -3,8 +3,7 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     redirect: '/home'
   },
@@ -18,7 +17,12 @@ const routes = [
   },
   {
     path: '/my',
-    component: () => import('@/views/My.vue')
+    component: () => import('@/views/My.vue'),
+    children: [],
+  },
+  {
+    path: '/my/myname',
+    component: () => import('@/views/Center/MyCenter')
   },
   {
     path: '/:list',

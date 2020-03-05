@@ -71,7 +71,7 @@ import { Loading } from "vant";
 Vue.use(Loading);
 
 export default {
-  data() {
+  data () {
     return {
       data: {},
       type: 0,
@@ -147,17 +147,17 @@ export default {
       this.page = 1;
       this.type = value;
       jsonp(
-        "https://yapi.tuwan.com/Lists/getListApi", //这里填写url
+        'https://yapi.tuwan.com/Lists/getListApi', // 这里填写url
         {
           type: this.type,
-          callback: "_jsonp38cyo66fzc",
+          callback: '_jsonp38cyo66fzc',
           dtid: this.$route.query.dtid
         },
         data => {
           this.data = data;
           //   console.log(data);
         }
-      );
+      )
     }
   },
   components: {
@@ -186,7 +186,7 @@ export default {
           return this.data.data
       }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

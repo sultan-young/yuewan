@@ -39,11 +39,8 @@ export default {
 body,
 html {
   height: 100%;
-<<<<<<< HEAD
   overflow: hidden;
-=======
   background: #f5f5f5;
->>>>>>> master
 }
 
 #app{

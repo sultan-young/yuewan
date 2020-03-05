@@ -142,6 +142,7 @@ export default {
 .home {
   height: 100%;
   font-size: 1rem;
+  overflow: scroll;
   background: #f5f5f5;
   .app-header {
     height: 7%;

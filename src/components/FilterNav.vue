@@ -18,7 +18,7 @@ export default {
     #filterNav{
         position: fixed ;
         right: 0;
-        height: 103%;
+        height: 100%;
         top: 0;
         // bottom: 0;
         background: #fff;

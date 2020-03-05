@@ -58,7 +58,7 @@
 export default ({
   methods: {
     handlock () {
-      console.log('111')
+      this.$router.push('/my/myname')
     }
   }
 })

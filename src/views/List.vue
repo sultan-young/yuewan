@@ -46,9 +46,41 @@
         >加载中...</van-loading>
       </div>
     </div>
-    <transition enter-active-class="animated fadeInRight"  mode="out-in">
-      <filternav v-if="filterNavShow" >
-          <div>123123</div>
+    <transition enter-active-class="animated fadeInRight" mode="out-in">
+      <filternav v-if="filterNavShow">
+        <div class="drawer">
+          <h3>性别</h3>
+          <ul>
+            <li
+              v-for="(item,index) in data.searchType.sex"
+              :key="item"
+              :class="{list_select_active : index == filterNavStatus.sex}"
+              @click="filterNavStatus.sex = +index;"
+            >{{item}}</li>
+          </ul>
+          <h3>等级</h3>
+          <ul>
+            <li
+              @click="filterNavStatus.grading = +index"
+              :class="{list_select_active : index == filterNavStatus.grading}"
+              v-for="(item,index) in data.searchType.grading"
+              :key="item"
+            >{{item}}</li>
+          </ul>
+          <h3>价格</h3>
+          <ul>
+            <li
+              @click="filterNavStatus.price = +index"
+              :class="{list_select_active : index == filterNavStatus.price}"
+              v-for="(item,index) in data.searchType.price"
+              :key="item"
+            >{{item}}</li>
+          </ul>
+          <div class="sideSure">
+            <li @click="resetBtn()">重置</li>
+            <li @click="submitBtn()">确定</li>
+          </div>
+        </div>
       </filternav>
     </transition>
     <backhome></backhome>
@@ -71,13 +103,18 @@ import { Loading } from "vant";
 Vue.use(Loading);
 
 export default {
-  data () {
+  data() {
     return {
       data: {},
       type: 0,
       page: 1,
       loadingShow: false,
-      filterNavShow: false
+      filterNavShow: false,
+      filterNavStatus: {
+        sex: 0,
+        grading: 0,
+        price: 0
+      }
     };
   },
   mounted() {
@@ -101,8 +138,28 @@ export default {
   },
   methods: {
     ...mapMutations(["setFootNavHidden"]),
-    filterNavShow1(){
-        console.log(111)
+    switchSex(value) {
+      if (value === "全部") {
+        return "全部";
+      } else if (value === "帅哥") {
+        return "男";
+      } else {
+        return "女";
+      }
+    },
+    resetBtn() {
+      this.filterNavStatus = {
+        sex: 0,
+        sexContent: "全部",
+        grading: 0,
+        price: 0
+      };
+    },
+    submitBtn() {
+      this.filterNavShow = false;
+    },
+    filterNavShow1() {
+      console.log(111);
     },
     getData(callback) {
       jsonp(
@@ -147,17 +204,17 @@ export default {
       this.page = 1;
       this.type = value;
       jsonp(
-        'https://yapi.tuwan.com/Lists/getListApi', // 这里填写url
+        "https://yapi.tuwan.com/Lists/getListApi", // 这里填写url
         {
           type: this.type,
-          callback: '_jsonp38cyo66fzc',
+          callback: "_jsonp38cyo66fzc",
           dtid: this.$route.query.dtid
         },
         data => {
           this.data = data;
           //   console.log(data);
         }
-      )
+      );
     }
   },
   components: {
@@ -182,14 +239,93 @@ export default {
     }
   },
   computed: {
-      computedDate(){
-          return this.data.data
+    computedDate() {
+      var sexIndex = this.filterNavStatus.sex;
+      var gradingndex = this.filterNavStatus.grading;
+      var priceIndex = this.filterNavStatus.price;
+      var arr = [];
+      // console.log(sexIndex, gradingndex, priceIndex);
+      // console.log(this.data.data);
+      if (priceIndex === 0 && sexIndex === 0 && gradingndex === 0) {
+        arr = this.data.data;
+        return arr;
       }
+      if (this.data.data !== undefined) {
+        arr = this.data.data.filter(item => {
+          return (
+            item.sex === this.switchSex(this.data.searchType.sex[sexIndex] || this.data.searchType.sex[sexIndex] === '全部')
+          );
+        });
+        console.log(arr)
+
+        arr = arr.filter(item => {
+          console.log(item.grading , this.data.searchType.grading[gradingndex],item.grading,'全部')
+          return item.grading === this.data.searchType.grading[gradingndex] || this.data.searchType.grading[gradingndex] === '全部';
+        })
+        console.log(arr)
+
+        arr = arr.filter(item => {
+          return +item.price === +this.data.searchType.price[priceIndex] || this.data.searchType.price[priceIndex] === '全部'
+        })
+        console.log(arr)
+        // console.log(arr);
+      }
+      return arr;
+    }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
+.list_select_active {
+  background: #ff707a !important;
+  color: #fff !important;
+}
+.drawer {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  h3 {
+    font-size: 15px;
+    color: #666;
+    margin-left: 2%;
+    margin-top: 10px;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    li {
+      padding: 5px 2%;
+      box-sizing: border-box;
+      width: 29%;
+      margin: 5px 2%;
+      font-size: 14px;
+      color: #333333;
+      border-radius: 5px;
+      text-align: center;
+      background: #ecedf1;
+    }
+  }
+  .sideSure {
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    width: 100%;
+    li {
+      width: 50%;
+      text-align: center;
+      padding: 10px 10px;
+      font-size: 14px;
+      background: #eaeaea;
+      color: #333;
+    }
+    li:nth-child(2) {
+      background: #ff626b;
+      color: #fff;
+    }
+  }
+}
 .selected {
   color: #f92246;
 }
@@ -207,7 +343,7 @@ export default {
   align-items: center;
 }
 .center-wraper {
-  //   height: 100%;
+  height: 100%;
   overflow: hidden;
 }
 .center {

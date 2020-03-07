@@ -124,6 +124,7 @@ export default {
         bottom: 0;
         right: 0;
         .h4head{
+          
           position: relative;
           width: 100%;
           height: 6%;

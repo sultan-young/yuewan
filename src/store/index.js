@@ -5,9 +5,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    footNavShow : true
+    footNavShow : true,
+    netName: "",
   },
   mutations: {
+    setNetName(state,value){
+      state.netName = value
+    },
     setFootNavHidden(state){
       state.footNavShow = false;
     },

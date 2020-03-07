@@ -9,15 +9,19 @@
   },
   "dependencies": {
     "animate.css": "^3.7.2",
+    "axios": "^0.19.2",
     "better-scroll": "^1.15.2",
     "core-js": "^3.6.4",
+    "domutils": "^2.0.0",
     "eslint-loader": "^3.0.3",
+    "mongoose": "^5.9.3",
     "swiper": "^5.3.6",
     "vant": "^2.5.3",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
     "vue-touch": "^2.0.0-beta.4",
-    "vuex": "^3.1.2"
+    "vuex": "^3.1.2",
+    "ws": "^7.2.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.2.0",

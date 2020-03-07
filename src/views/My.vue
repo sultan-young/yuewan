@@ -5,7 +5,7 @@
               <!-- <router-link class="header" tag="div" to="/my/myname"> -->
               <img src="https://uc.tuwan.com/images/noavatar_middle.gif" class="img1">
               <div class="userinfo_info">
-                  <p class="pname">twm_d2b337b14<img src="https://res.tuwan.com/templet/play/images/app/0.png" alt=""></p>
+                  <p class="pname">{{$store.state.netName}}<img src="https://res.tuwan.com/templet/play/images/app/0.png" alt=""></p>
                   <p class="pid"> UID : 2939303</p>
               </div >
               <img src="//res.tuwan.com/templet/weixin/yuewan/static/img/right_icon.f622e47.png" alt="" class="img2">
@@ -52,14 +52,24 @@
               <img src="//res.tuwan.com/templet/weixin/yuewan/static/img/right_icon.f622e47.png" alt="" class="img2 fr">
           </div>
        </div>
+       <backBtn></backBtn>
     </div>
 </template>
 <script>
+import backBtn from '@/components/BackHome'
+import {mapMutations} from 'vuex'
 export default ({
   methods: {
+    ...mapMutations(["setFootNavHidden"]),
     handlock () {
       this.$router.push('/my/myname')
     }
+  },
+  mounted() {
+    this.setFootNavHidden()
+  },
+  components:{
+    backBtn
   }
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div id="list">
+  <v-touch v-on:swipeleft="onSwipeLeft" v-on:swiperight="onSwipeRight" tag="div" id="list">
     <div class="nav-header">
       <li @click="changeType(0)" :class="{selected: type == 0}">推荐</li>
       <li @click="changeType(1)" :class="{selected: type == 1}">热门</li>
@@ -87,7 +87,7 @@
     <transition enter-active-class="animated fadeIn" mode="out-in">
       <shade v-if="filterNavShow" @click="filterNavShow = false"></shade>
     </transition>
-  </div>
+  </v-touch>
 </template>
 <script>
 import { mapMutations } from "vuex";
@@ -99,7 +99,10 @@ import shade from "@/components/Shade";
 import BScroll from "better-scroll";
 import Vue from "vue";
 import { Loading } from "vant";
+import VueTouch from "vue-touch";
+import { toast, stopToast } from "@/util/loading";
 
+Vue.use(VueTouch, { name: "v-touch" });
 Vue.use(Loading);
 
 export default {
@@ -138,6 +141,20 @@ export default {
   },
   methods: {
     ...mapMutations(["setFootNavHidden"]),
+    onSwipeLeft() {
+      if (this.type === 2) {
+        this.changeType(0);
+      } else {
+        this.changeType(++this.type)
+      }
+    },
+    onSwipeRight(){
+     if (this.type === 0) {
+        this.changeType(2);
+      } else {
+        this.changeType(--this.type)
+      }
+    },
     switchSex(value) {
       if (value === "全部") {
         return "全部";
@@ -162,6 +179,7 @@ export default {
       console.log(111);
     },
     getData(callback) {
+      toast();
       jsonp(
         "https://yapi.tuwan.com/Lists/getListApi", //这里填写url
         {
@@ -175,12 +193,14 @@ export default {
           // this.dataList = data;
           // this.HandlerRouters(this.dataList.gamelist);
           if (this.data.data === undefined) {
+            stopToast();
             this.data = data;
           } else {
             var newArr = this.checkKey(data.data); //该方法用来处理加载来的数据可能是重复的情况。用来过滤加载的数组。
             // console.log(newArr);
             this.data.data = this.data.data.concat(newArr);
             console.log("数据加载完毕");
+            stopToast();
             callback && callback();
           }
           this.page++;
@@ -203,6 +223,7 @@ export default {
     changeType(value) {
       this.page = 1;
       this.type = value;
+      toast();
       jsonp(
         "https://yapi.tuwan.com/Lists/getListApi", // 这里填写url
         {
@@ -212,6 +233,7 @@ export default {
         },
         data => {
           this.data = data;
+          stopToast();
           //   console.log(data);
         }
       );
@@ -253,21 +275,36 @@ export default {
       if (this.data.data !== undefined) {
         arr = this.data.data.filter(item => {
           return (
-            item.sex === this.switchSex(this.data.searchType.sex[sexIndex] || this.data.searchType.sex[sexIndex] === '全部')
+            item.sex ===
+            this.switchSex(
+              this.data.searchType.sex[sexIndex] ||
+                this.data.searchType.sex[sexIndex] === "全部"
+            )
           );
         });
-        console.log(arr)
+        console.log(arr);
 
         arr = arr.filter(item => {
-          console.log(item.grading , this.data.searchType.grading[gradingndex],item.grading,'全部')
-          return item.grading === this.data.searchType.grading[gradingndex] || this.data.searchType.grading[gradingndex] === '全部';
-        })
-        console.log(arr)
+          console.log(
+            item.grading,
+            this.data.searchType.grading[gradingndex],
+            item.grading,
+            "全部"
+          );
+          return (
+            item.grading === this.data.searchType.grading[gradingndex] ||
+            this.data.searchType.grading[gradingndex] === "全部"
+          );
+        });
+        console.log(arr);
 
         arr = arr.filter(item => {
-          return +item.price === +this.data.searchType.price[priceIndex] || this.data.searchType.price[priceIndex] === '全部'
-        })
-        console.log(arr)
+          return (
+            +item.price === +this.data.searchType.price[priceIndex] ||
+            this.data.searchType.price[priceIndex] === "全部"
+          );
+        });
+        console.log(arr);
         // console.log(arr);
       }
       return arr;

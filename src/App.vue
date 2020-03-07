@@ -19,12 +19,17 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
+import axios from "axios";
 export default {
+
+  mounted() {
+    
+  },
   computed: {
     ...mapState(["footNavShow"])
   }
-}
+};
 </script>
 
 <style lang="scss">
@@ -43,7 +48,7 @@ html {
   background: #f5f5f5;
 }
 
-#app{
+#app {
   height: 100%;
   overflow: hidden;
 }

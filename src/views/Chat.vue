@@ -24,7 +24,7 @@ export default {
     };
   },
   mounted() {
-    this.ws = new WebSocket("ws://127.0.0.1:8888");
+    this.ws = new WebSocket("ws://106.13.118.135:9999");
     this.ws.onopen = function() {
       console.log("成功进入聊天室");
     };

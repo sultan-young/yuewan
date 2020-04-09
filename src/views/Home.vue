@@ -12,11 +12,16 @@
       <div class="swiper-container">
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="(data,index) in trendRouters" :key="index">
-            <router-link :to="'/list?dtid='+list.dtid" tag="li" class="item" v-for="list in trendRouters[index]" :key="list.dtid" >
+            <router-link
+              :to="'/list?dtid='+list.dtid"
+              tag="li"
+              class="item"
+              v-for="list in trendRouters[index]"
+              :key="list.dtid"
+            >
               <img :src="list.images" alt />
               <span>{{list.gamename}}</span>
             </router-link>
-
           </div>
         </div>
         <!-- Add Pagination -->
@@ -24,44 +29,53 @@
       </div>
     </div>
     <div class="content">
-         <div class="tt">
-           <p class="title">为您推荐</p>
-         </div>
-         <ul>
-           <li v-for="(data,index) in dataList.QuickPlay" :key="index" class="zh">
-           <dl>
-             <dt>
-                 <img :src="data.imgurl" alt="" class="photo">
-                 <span class="work">{{data.title}}</span>
-                 <span class="dw">{{data.grading}}</span>
-             </dt>
-             <dd>
-                 <span class="name">{{data.nickname}}</span>
-                 <p class="price">￥{{data.price}}/{{data.typeflag}}</p>
-             </dd>
-           </dl>
-         </li>
-         </ul>
+      <div class="tt">
+        <p class="title">为您推荐</p>
+      </div>
+      <ul>
+        <li
+          v-for="(data,index) in dataList.QuickPlay"
+          :key="index"
+          class="zh"
+          @click="handleClick(data.id)"
+        >
+          <dl>
+            <dt>
+              <img :src="data.imgurl" alt class="photo" />
+              <span class="work">{{data.title}}</span>
+              <span class="dw">{{data.grading}}</span>
+            </dt>
+            <dd>
+              <span class="name">{{data.nickname}}</span>
+              <p class="price">￥{{data.price}}/{{data.typeflag}}</p>
+            </dd>
+          </dl>
+        </li>
+      </ul>
     </div>
-    <div class="content" v-for="(data,index) in dataList.hot" :key="index">
-          <div class="tt">
-           <p class="title">{{data.title}}</p>
-         </div>
-         <ul>
-           <li v-for="(data,index) in data.data" :key="index" class="zh">
-           <dl>
-             <dt>
-                 <img :src="data.imgurl" alt="" class="photo">
-                 <span class="dw">{{data.grading}}</span>
-             </dt>
-             <dd>
-                 <span class="name">{{data.nickname}}</span>
-                 <p class="price">￥{{data.price}}/{{data.typeflag}}</p>
-             </dd>
-           </dl>
-         </li>
-         </ul>
-         <div class="footer"></div>
+    <div
+      class="content"
+      v-for="(data,index) in dataList.hot"
+      :key="index"
+    >
+      <div class="tt">
+        <p class="title">{{data.title}}</p>
+      </div>
+      <ul>
+        <li v-for="(data,index) in data.data" :key="index" class="zh"  @click="handleClick(data.id)">
+          <dl>
+            <dt>
+              <img :src="data.imgurl" alt class="photo" />
+              <span class="dw">{{data.grading}}</span>
+            </dt>
+            <dd>
+              <span class="name">{{data.nickname}}</span>
+              <p class="price">￥{{data.price}}/{{data.typeflag}}</p>
+            </dd>
+          </dl>
+        </li>
+      </ul>
+      <div class="footer"></div>
     </div>
   </div>
 </template>
@@ -72,7 +86,7 @@ import Vue from 'vue'
 import { Search } from 'vant'
 import Swiper from 'swiper'
 import 'swiper/css/swiper.min.css'
-import {mapMutations} from 'vuex'
+import { mapMutations } from 'vuex'
 
 Vue.use(Search)
 export default {
@@ -97,14 +111,14 @@ export default {
     )
   },
   updated () {
-    var swiper = new Swiper('.swiper-container', {
+     new Swiper('.swiper-container', {
       pagination: {
         el: '.swiper-pagination'
       }
     })
   },
   methods: {
-    ...mapMutations(["setFootNavHiShow"]),
+    ...mapMutations(['setFootNavHiShow']),
     HandlerRouters (data) {
       var flag = -1
       data.forEach((value, index) => {
@@ -115,6 +129,9 @@ export default {
         this.trendRouters[flag].push(value)
       })
       // console.log(this.trendRouters);
+    },
+    handleClick (id) {
+      this.$router.push(`/detail/${id}`)
     }
   }
 }
@@ -139,7 +156,7 @@ export default {
     }
   }
 }
-.swiper-pagination{
+.swiper-pagination {
   bottom: 0px;
 }
 .home {
@@ -171,73 +188,73 @@ export default {
     }
   }
 }
-.swiper-nav{
+.swiper-nav {
   background: white;
-  margin-bottom:12px;
+  margin-bottom: 12px;
 }
-.content{
+.content {
   height: 210px;
   background: white;
-  margin-bottom:12px;
+  margin-bottom: 12px;
 }
-.tt{
+.tt {
   height: 36px;
 }
-.title{
+.title {
   color: #f92246;
   font-size: 17px;
-  line-height:36px; 
+  line-height: 36px;
   text-align: center;
 }
-.photo{
+.photo {
   width: 105px;
   height: 105px;
 }
-.name{
+.name {
   font-size: 13px;
 }
-.price{
+.price {
   font-size: 13px;
   color: #f93354;
 }
-dt{
+dt {
   position: relative;
 }
-dd{
+dd {
   width: 110px;
 }
-ul{
+ul {
   display: flex;
   justify-content: space-around;
 }
-.work{
+.work {
   width: 54px;
   height: 16px;
   font-size: 0.18rem;
   line-height: 16px;
   color: #ffffff;
-  background:rgba(255,99,113,0.90);
+  background: rgba(255, 99, 113, 0.9);
   text-align: center;
   position: absolute;
   left: -8px;
   bottom: 11px;
   border-radius: 10%;
 }
-.dw{
+.dw {
   height: 13px;
   width: 27px;
   border-radius: 10%;
   line-height: 13px;
-  font-size:0.18rem;
+  font-size: 0.18rem;
   color: #ffffff;
-  background: rgba(255,207,166,0.90);
+  background: rgba(255, 207, 166, 0.9);
   text-align: center;
   position: absolute;
   top: 6px;
   right: 10px;
 }
-.footer{
+.footer {
   height: 115px;
 }
 </style>
-</style>
+

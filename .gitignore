@@ -1,5 +1,6 @@
 .DS_Store
 node_modules
+src---之前代码，备用
 /dist
 
 # local env files
